@@ -33,6 +33,8 @@ public struct DeviceCheck: Middleware {
                 if res.status == .ok {
                     return next.respond(to: request)
                 }
+
+                request.logger.info("DeviceCheck repsonse: \(res.status) \(res)")
                 
                 if isSandbox {
                     return request.eventLoop.makeFailedFuture(Abort(.unauthorized))
